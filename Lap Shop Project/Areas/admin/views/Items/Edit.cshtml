@@ -1,0 +1,200 @@
+﻿
+@using Lap_Shop_Project.Models;
+@using Lap_Shop_Project.Resources;
+@model TbItem;
+@section Styles {
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="~/Admin/assets/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="~/Admin/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <!-- End plugin css for this page -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="~/Admin/assets/vendors/dropzone/dropzone.css">
+    <link rel="stylesheet" href="~/Admin/assets/vendors/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Admin/assets/vendors/jquery-bar-rating/bars-1to10.css">
+    <link rel="stylesheet" href="~/Admin/assets/vendors/jquery-bar-rating/bars-horizontal.css">
+    <link rel="stylesheet" href="~/Admin/assets/vendors/jquery-bar-rating/bars-movie.css">
+    <link rel="stylesheet" href="~/Admin/assets/vendors/jquery-bar-rating/bars-pill.css">
+    <link rel="stylesheet" href="~/Admin/assets/vendors/jquery-bar-rating/bars-reversed.css">
+    <link rel="stylesheet" href="~/Admin/assets/vendors/jquery-bar-rating/bars-square.css">
+    <link rel="stylesheet" href="~/Admin/assets/vendors/jquery-bar-rating/bootstrap-stars.css">
+    <link rel="stylesheet" href="~/Admin/assets/vendors/jquery-bar-rating/css-stars.css">
+    <link rel="stylesheet" href="~/Admin/assets/vendors/jquery-bar-rating/examples.css">
+    <link rel="stylesheet" href="~/Admin/assets/vendors/jquery-bar-rating/fontawesome-stars-o.css">
+    <link rel="stylesheet" href="~/Admin/assets/vendors/jquery-bar-rating/fontawesome-stars.css">
+    <link rel="stylesheet" href="~/Admin/assets/vendors/jquery-asColorPicker/css/asColorPicker.min.css">
+    <link rel="stylesheet" href="~/Admin/assets/vendors/x-editable/bootstrap-editable.css">
+    <link rel="stylesheet" href="~/Admin/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="~/Admin/assets/vendors/dropify/dropify.min.css">
+    <link rel="stylesheet" href="~/Admin/assets/vendors/jquery-file-upload/uploadfile.css">
+    <link rel="stylesheet" href="~/Admin/assets/vendors/jquery-tags-input/jquery.tagsinput.min.css">
+    <link rel="stylesheet" href="~/Admin/assets/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css">
+    <!-- End plugin css for this page -->
+}
+<div class="col-12 grid-margin stretch-card">
+    <form class="col-12 grid-margin stretch-card" asp-area="Admin" method="post" enctype="multipart/form-data" asp-controller="Items" asp-action="Save" role="form">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div style="background-color:#eee" class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Basic Data</h4>
+                    <input asp-for="ItemId" type="hidden" />
+                    <input asp-for="CreatedBy" type="hidden" />
+                    <input asp-for="CreatedDate" type="hidden" />
+                    <input asp-for="CurrentState" type="hidden" />
+                    <input asp-for="ImageName" type="hidden" />
+                    <div class=" form-group">
+                        <label class="sr-only" for="inlineFormInputName2">@ResAdmin.lblItemName</label>
+                        <input asp-for="ItemName" type="text" class="form-control mb-2 mr-sm-2"  placeholder="@ResAdmin.lblItemName">
+                        <span asp-validation-for="ItemName" class="danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect2">@ResAdmin.lblCategoryName</label>
+                        <select asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.lisCategories,"CategoryId","CategoryName"))" class="form-control form-control-lg" id="exampleFormControlSelect1">
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect2">@ResAdmin.lblos</label>
+                        <select asp-for="OsId" asp-items="@(new SelectList(ViewBag.lisOs,"OsId","OsName"))" class="form-control form-control-lg" id="exampleFormControlSelect1">
+                        </select>
+                       
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect3">@ResAdmin.lblItemType</label>
+                        <select asp-for="ItemTypeId" asp-items="@(new SelectList(ViewBag.lisItemType,"ItemTypeId","ItemTypeName"))" class="form-control form-control-lg" id="exampleFormControlSelect1">
+                        </select>
+                        <span asp-validation-for="ItemTypeId"></span>
+                    </div>
+                    <div class=" form-group">
+                        <label class="sr-only" for="inlineFormInputName2">@ResAdmin.lblPrice</label>
+                        <input asp-for="SalesPrice" type="number" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="@ResAdmin.lblPrice">
+                        <span asp-validation-for="SalesPrice" class="danger"></span>
+                    </div>
+                    <div class=" form-group">
+                        <label class="sr-only" for="inlineFormInputName2">@ResAdmin.lblPurchasePrice</label>
+                        <input asp-for="PurchasePrice" type="number" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="@ResAdmin.lblPurchasePrice">
+                        <span asp-validation-for="PurchasePrice" class="danger"></span>
+                    </div>
+                    <div class=" form-group">
+                        <label class="sr-only" for="inlineFormInputName2">@ResAdmin.lblWeight</label>
+                        <input asp-for="Weight" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="@ResAdmin.lblWeight">
+                        <span asp-validation-for="Weight" class="danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputUsername1">
+                            @ResAdmin.LblImage
+                        </label>
+                        <input asp-for="ImageName" type="file" name="Files" multiple
+                               class="form-control" placeholder="@ResAdmin.LblImage"
+                               onchange="Upload.UploadDefaultImg(event)" accept=".jpg, .jpeg, .png, ,.gif">
+
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 grid-margin stretch-card">
+            <div style="background-color:#eee" class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Advenced Data</h4>
+                   
+                    <div class="form-group">
+                        <label class="sr-only" for="inlineFormInputName2">@ResAdmin.lblGpu</label>
+                        <input asp-for="Gpu" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="@ResAdmin.lblGpu">
+                        <span asp-validation-for="Gpu" class="danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="inlineFormInputName2">@ResAdmin.lblProcessor</label>
+                        <input asp-for="Processor" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="@ResAdmin.lblProcessor">
+                        <span asp-validation-for="Processor" class="danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="inlineFormInputName2">@ResAdmin.lblHardDisk</label>
+                        <input asp-for="HardDisk" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="@ResAdmin.lblHardDisk">
+                        <span asp-validation-for="HardDisk" class="danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="inlineFormInputName2">@ResAdmin.lblRamSize</label>
+                        <input asp-for="RamSize" type="number" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="@ResAdmin.lblRamSize">
+                        <span asp-validation-for="RamSize" class="danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="inlineFormInputName2">@ResAdmin.lblScreenReslution</label>
+                        <input asp-for="ScreenReslution" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="@ResAdmin.lblScreenReslution">
+                        <span asp-validation-for="ScreenReslution" class="danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="inlineFormInputName2">@ResAdmin.lblScreenSize</label>
+                        <input asp-for="ScreenSize" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Enter Category @ResAdmin.lblScreenSize">
+                        <span asp-validation-for="ScreenSize" class="danger"></span>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <span id="tbImgName"></span>
+                            <div id="tbImgSrc">
+                                <img src="/Uploads/Items/@Model.ImageName" style="width:95%; height300px;" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input value="Submit" type="submit" class="btn btn-gradient-primary mb-2" />
+                    </div>
+            </div>
+        </div>
+            
+      </form>
+</div>
+@section Scripts {
+    <!-- Plugin js for this page -->
+    <script src="~/Admin/assets/vendors/select2/select2.min.js"></script>
+    <script src="~/Admin/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- Plugin js for this page -->
+    <script src="~/Admin/assets/vendors/jquery-bar-rating/jquery.barrating.min.js"></script>
+    <script src="~/Admin/assets/vendors/jquery-asColor/jquery-asColor.min.js"></script>
+    <script src="~/Admin/assets/vendors/jquery-asGradient/jquery-asGradient.min.js"></script>
+    <script src="~/Admin/assets/vendors/jquery-asColorPicker/jquery-asColorPicker.min.js"></script>
+    <script src="~/Admin/assets/vendors/x-editable/bootstrap-editable.min.js"></script>
+    <script src="~/Admin/assets/vendors/moment/moment.min.js"></script>
+    <script src="~/Admin/assets/vendors/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.js"></script>
+    <script src="~/Admin/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/Admin/assets/vendors/dropify/dropify.min.js"></script>
+    <script src="~/Admin/assets/vendors/jquery-file-upload/jquery.uploadfile.min.js"></script>
+    <script src="~/Admin/assets/vendors/jquery-tags-input/jquery.tagsinput.min.js"></script>
+    <script src="~/Admin/assets/vendors/dropzone/dropzone.js"></script>
+    <script src="~/Admin/assets/vendors/jquery.repeater/jquery.repeater.min.js"></script>
+    <script src="~/Admin/assets/vendors/inputmask/jquery.inputmask.bundle.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page -->
+    <script src="~/Admin/assets/js/file-upload.js"></script>
+    <script src="~/Admin/assets/js/typeahead.js"></script>
+    <script src="~/Admin/assets/js/select2.js"></script>
+
+
+    <!-- Custom js for this page -->
+    <script src="~/Admin/assets/js/formpickers.js"></script>
+    <script src="~/Admin/assets/js/form-addons.js"></script>
+    <script src="~/Admin/assets/js/x-editable.js"></script>
+    <script src="~/Admin/assets/js/dropify.js"></script>
+    <script src="~/Admin/assets/js/dropzone.js"></script>
+    <script src="~/Admin/assets/js/jquery-file-upload.js"></script>
+    <script src="~/Admin/assets/js/formpickers.js"></script>
+    <script src="~/Admin/assets/js/form-repeater.js"></script>
+    <script src="~/Admin/assets/js/inputmask.js"></script>
+
+    <script>
+        var Upload = {
+            UploadDefaultImg: function (e) {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    CourseMediaImgName = file.name;
+                    CourseMediaImgBase64 = reader.result.slice(reader.result.indexOf('base64,') + 7);
+                    $("#tbImgName").html(file.name)
+                    $("#tbImgSrc").html(`<img class="thumbnail" src = "${reader.result}"  style = "width: 200px;height: 300px;border-radius: 5px;border: 1px solid #d9d9d9;padding: 1px;" />`)
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+
+}
